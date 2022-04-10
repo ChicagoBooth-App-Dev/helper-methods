@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
   def index
     matching_movies = Movie.all
 
-    @list_of_movies = matching_movies.order({ :created_at => :desc })
+    @list_of_movies = matching_movies.order(created_at: :asc )
 
     respond_to do |format|
       format.json do
@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
       end
 
       format.html do
-        render({ :template => "movies/index.html.erb" })
+        render(template: "movies/index.html.erb" )
       end
     end
   end
@@ -24,11 +24,11 @@ class MoviesController < ApplicationController
   def show
     the_id = params.fetch(:id)
 
-    matching_movies = Movie.where({ :id => the_id })
+    matching_movies = Movie.where(id: the_id )
 
     @the_movie = matching_movies.first
 
-    render({ :template => "movies/show.html.erb" })
+    render(template: "movies/show.html.erb" )
   end
 
   def create
@@ -38,7 +38,7 @@ class MoviesController < ApplicationController
 
     if @the_movie.valid?
       @the_movie.save
-      redirect_to(movies_url, { :notice => "Movie created successfully." })
+      redirect_to(movies_url, notice: "Movie created successfully." )
     else
       render template: "movies/new.html.erb"
     end
@@ -47,11 +47,11 @@ class MoviesController < ApplicationController
   def edit
     the_id = params.fetch(:id)
 
-    matching_movies = Movie.where({ :id => the_id })
+    matching_movies = Movie.where( id: the_id )
 
     @the_movie = matching_movies.first
 
-    render({ :template => "movies/edit.html.erb" })
+    render(template: "movies/edit.html.erb" )
   end
 
   def update
