@@ -1,7 +1,6 @@
 class MoviesController < ApplicationController
   def new
     @movie = Movie.new
-
   end
 
   def index
@@ -26,15 +25,14 @@ class MoviesController < ApplicationController
   end
 
   def create
-    @movie = Movie.new
-    @movie.title = params.fetch(:movie).fetch(:title)
-    @movie.description = params.fetch(:movie).fetch(:description)
+    @movie = Movie.new(params.require(:movie).permit(:title, :description))
+
 
     if @movie.valid?
       @movie.save
       redirect_to(movies_url, notice: "Movie created successfully." )
     else
-      render template: "movies/new"
+      render "new"
     end
   end
 
@@ -46,8 +44,8 @@ class MoviesController < ApplicationController
   def update
     @movie = Movie.find(params.fetch(:id))
 
-    @movie.title = params.fetch(:title)
-    @movie.description = params.fetch(:description)
+    @movie.title = params.fetch(:movie).fetch(:title)
+    @movie.description = params.fetch(:movie).fetch(:description)
 
     if @movie.valid?
       @movie.save
