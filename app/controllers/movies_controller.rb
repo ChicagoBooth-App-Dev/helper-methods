@@ -2,7 +2,6 @@ class MoviesController < ApplicationController
   def new
     @movie = Movie.new
 
-    render template: "movies/new"
   end
 
   def index
@@ -24,13 +23,12 @@ class MoviesController < ApplicationController
   def show
     @movie = Movie.find(params.fetch(:id))
 
-    render(template: "movies/show" )
   end
 
   def create
     @movie = Movie.new
-    @movie.title = params.fetch("title")
-    @movie.description = params.fetch("description")
+    @movie.title = params.fetch(:movie).fetch(:title)
+    @movie.description = params.fetch(:movie).fetch(:description)
 
     if @movie.valid?
       @movie.save
@@ -43,14 +41,13 @@ class MoviesController < ApplicationController
   def edit
     @movie = Movie.find(params.fetch(:id))
 
-    render(template: "movies/edit" )
   end
 
   def update
     @movie = Movie.find(params.fetch(:id))
 
-    @movie.title = params.fetch("title")
-    @movie.description = params.fetch("description")
+    @movie.title = params.fetch(:title)
+    @movie.description = params.fetch(:description)
 
     if @movie.valid?
       @movie.save
